@@ -1,0 +1,19 @@
+<div class="container">
+    <h3>Convert currency</h3>
+    <form (submit)="Convert(inputFrom.value, inputTo.name)">
+        <input #inputFrom>
+    </form>
+    <select [(ngModel)]="corporationObj" [value]="(corporationObj? corporationObj : 'usd')">
+        <option value="usd">usd</option>
+        <option value="eur">eur</option>
+        <option value="rub">rub</option>
+
+    </select>
+    <button (click)="Convert(inputFrom.value, inputTo.name)">Click</button>
+    <p>{{rateName}}</p>
+    <input #inputTo [name]="corporationObj" [value]="(value2? value2+' '+inputTo.name.toUpperCase() :' ' )">
+    <br>
+
+
+
+</div>
