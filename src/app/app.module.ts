@@ -7,19 +7,30 @@ import { ServService } from 'src/serv.service';
 
 import { AppComponent } from './app.component';
 import { FormsComponent } from './forms/forms.component'
+import { DateComponent } from './date/date.component';
+
+import { ChartModule } from 'angular-highcharts';
+import { HIGHCHARTS_MODULES } from 'angular-highcharts';
+import * as more from 'highcharts/highcharts-more.src';
+import * as exporting from 'highcharts/modules/exporting.src';
 @NgModule({
   declarations: [
     AppComponent,
-    FormsComponent
+    FormsComponent,
+    DateComponent
 
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ChartModule
+    
   ],
-  providers: [ServService],
-  bootstrap: [AppComponent, FormsComponent]
+  providers: [ServService,
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting ] } // add as factory to your providers
+  ],
+  bootstrap: [AppComponent, FormsComponent, DateComponent]
 })
 export class AppModule {
 
