@@ -17,8 +17,11 @@ export class ServService {
     return this.http.get(url);
   }
 
-  getDataWithDate(date){
-    let url="https://www.nbrb.by/api/exrates/rates/145?ondate="+ date;
+  getDataWithDate(date, code){
+    let url="https://www.nbrb.by/api/exrates/rates/" + code +"?ondate="+ date;
     return this.http.get(url);
   }
 }
+//// 145 usd
+////298 rus
+////292 eur
