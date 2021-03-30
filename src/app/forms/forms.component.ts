@@ -19,12 +19,22 @@ export class FormsComponent implements OnInit {
   value2: number;
   corporationObj: string;
   rateName: string;
-  ratesArray: string[] = ['eur', 'rub', 'usd'];
 
+  rates = new Map([
+    ['USD', '145'],
+    ['EUR', '292'],
+    ['RUB', '298'],
+    ['CNY', '250'], //китайский юань
+    ['GBP', '143'], //фунт сткрлингов
+    ['CAD', '124']  //канадский доллар
+  ]);
 
+public getSelectedRate(){
+  return this.corporationObj;
+}
   constructor(private servService: ServService) { }
   ngOnInit(): void {
-
+console.log(this.corporationObj+" SELECTED");
   }
 
   Convert(valueFrom: string, str: string) {
@@ -34,11 +44,11 @@ export class FormsComponent implements OnInit {
       this.rateName = this.post.Cur_Name;
     });
     setTimeout(() => {
-      console.log(this.post.Cur_OfficialRate);
+      console.log(this.post.Cur_OfficialRate/this.post.Cur_Scale);
       console.log(this.post.Date);
       console.log(valueFrom);
-      console.log(parseInt(valueFrom) * this.post.Cur_OfficialRate);
-      this.value2 = (parseInt(valueFrom) * this.post.Cur_OfficialRate);
+      console.log(parseInt(valueFrom) * this.post.Cur_OfficialRate/this.post.Cur_Scale);
+      this.value2 = (parseInt(valueFrom) * this.post.Cur_OfficialRate/this.post.Cur_Scale);
     }, 1000);
 
   }

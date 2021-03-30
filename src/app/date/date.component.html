@@ -1,16 +1,13 @@
-
 <div class="date-container">
-    
- <input type="date" [(ngModel)] = "value1" id="start-date">
- <input type="date" [(ngModel)] = "value2" id="end-date">
- <button (click)="dateClick()">CLICK</button>
+
+    <input type="date" [(ngModel)]="value1" id="start-date">
+    <input type="date" [(ngModel)]="value2" id="end-date">
+    Rate: 
+    <select [(ngModel)]="selectedRate" [value]="(selectedRate? selectedRate : 'usd')">
+        <option *ngFor="let rate of rates | keyvalue" value="{{rate.key}}"> {{rate.key}}</option>
+    </select>
+    <button (click)="dateClick()">CLICK</button>
+
 
 </div>
-
-
- <!-- <button (click)="add()">Add Point!</button> -->
-    <div [chart]="chart"></div>
-
-
-
-
+<div [chart]="chart"></div>
