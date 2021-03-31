@@ -1,0 +1,17 @@
+<div class="container">
+    <h3>Convert currency</h3>
+    <form (submit)="Convert(inputFrom.value, inputTo.name)">
+        <input formControlName='input1'>
+
+        <select formControlName='currencyType'>
+            <option value="usd">usd</option>
+            <option value="eur">eur</option>
+            <option value="rub">rub</option>
+
+        </select>
+        <button>Click</button>
+        <p>{{rateName}}</p>
+        <input formControlName='currencyType' readonly>
+        <br>
+    </form>
+</div>

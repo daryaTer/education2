@@ -17,7 +17,7 @@ export class FormsComponent implements OnInit {
   post: ProtoInfo;
   input1: number;
   value2: number;
-  corporationObj: string;
+  corporationObj = 'USD';
   rateName: string;
 
   rates = new Map([
