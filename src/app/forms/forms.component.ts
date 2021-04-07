@@ -34,7 +34,6 @@ public getSelectedRate(){
 }
   constructor(private servService: ServService) { }
   ngOnInit(): void {
-console.log(this.corporationObj+" SELECTED");
   }
 
   Convert(valueFrom: string, str: string) {

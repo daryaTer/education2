@@ -3,7 +3,7 @@
     <form (submit)="Convert(inputFrom.value, inputTo.name)">
         <input #inputFrom>
     </form>
-    <select [(ngModel)]="corporationObj" [value]="(corporationObj? corporationObj : 'usd')">
+    <select [(ngModel)]="corporationObj" [value]="(corporationObj? corporationObj : 'USD')">
     <option *ngFor="let recipient of rates | keyvalue" value="{{recipient.key}}"> {{recipient.key}}</option>
     </select>
 
@@ -15,3 +15,4 @@
 
 
 </div>
+

@@ -1,0 +1,11 @@
+<br><br><br><br>
+<div>
+    <form [formGroup]="MyForm">
+        <input formControlName="input1" >
+        <select formControlName="select" [(ngModel)]="corporationObj">
+            <option *ngFor="let recipient of rates | keyvalue" value="{{recipient.key}}"> {{recipient.key}}</option>
+            </select>
+        <input formControlName='input2' >
+    </form>
+</div>
+
