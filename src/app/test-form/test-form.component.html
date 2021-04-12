@@ -1,11 +1,10 @@
 <br><br><br><br>
 <div>
-    <form [formGroup]="MyForm">
+    <form [formGroup]="myForm">
         <input formControlName="input1" >
-        <select formControlName="select" [(ngModel)]="corporationObj">
+        <select formControlName="selectCurrency">
             <option *ngFor="let recipient of rates | keyvalue" value="{{recipient.key}}"> {{recipient.key}}</option>
-            </select>
-        <input formControlName='input2' >
+        </select>
+        <input formControlName='input2' readonly>
     </form>
 </div>
-

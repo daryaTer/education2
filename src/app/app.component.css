@@ -1,0 +1,35 @@
+h1{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 27px;
+    margin: 40px 0;
+}
+
+nav{
+    /* width:60%; */
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: rgb(238, 236, 236);
+}
+
+nav a{
+    text-transform: uppercase;
+    font-size: 20px;
+    text-decoration: none;
+    color:rgb(103, 106, 114);
+    font-weight: bold;
+    margin: auto 0;
+    cursor: pointer;
+}
+
+nav a:hover{
+color:rgb(113, 126, 160);
+}
+
+nav a.active{
+    color:rgb(113, 129, 168);
+
+}

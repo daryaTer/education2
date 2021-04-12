@@ -14,30 +14,32 @@ import { HIGHCHARTS_MODULES } from 'angular-highcharts';
 import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
 import { TestFormComponent } from './test-form/test-form.component';
+import {AppRoutingModule} from 'src/app/app-routing.module'
+
+
 @NgModule({
   declarations: [
     AppComponent,
     FormsComponent,
     DateComponent,
-    TestFormComponent
-
+    TestFormComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ChartModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    AppRoutingModule,
   ],
   providers: [ServService,
     { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting ] } // add as factory to your providers
   ],
-  bootstrap: [AppComponent, FormsComponent, DateComponent,TestFormComponent]
+  bootstrap: [AppComponent ]
 })
 export class AppModule {
 
-  constructor() { }
+  constructor() { }  
 }
 
 
