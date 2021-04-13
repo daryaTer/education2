@@ -1,18 +1,22 @@
 <div class="container">
     <h3>Convert currency</h3>
-    <form (submit)="Convert(inputFrom.value, inputTo.name)" >
-        <input #inputFrom matInput type="number" pattern="[/^[0-9]+(,.)/]*">
-    </form>
-    <select [(ngModel)]="corporationObj" [value]="(corporationObj? corporationObj : 'USD')">
-    <option *ngFor="let recipient of rates | keyvalue" value="{{recipient.key}}"> {{recipient.key}}</option>
-    </select>
+    <form (submit)="Convert()" [formGroup]="form">
 
-    <button (click)="Convert(inputFrom.value, inputTo.name)">Click</button>
-    <p>{{rateName}}</p>
-    <input #inputTo [name]="corporationObj" [value]="(value2? value2+' '+inputTo.name.toUpperCase() :' ' )">
-    <br>
+        <input formControlName="input" matInput type="number" pattern="[/^[0-9]+(,.)/]*">
+
+        <select formControlName="selectCurrency" [value]="(selectCurrency? selectCurrency : 'USD')">
+            <option *ngFor="let recipient of rates | keyvalue" value="{{recipient.key}}"> {{recipient.key}}</option>
+        </select>
+
+        <p>{{rateName}}</p>
+        <input formControlName="output" 
+            >
+        <br>
+
+        <button (click)="Convert()">Click</button>
+    </form>
+
 
 
 
 </div>
-

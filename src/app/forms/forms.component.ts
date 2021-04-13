@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServService } from 'src/serv.service';
 import { ProtoInfo } from 'src/app/ProtoInfo';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forms',
@@ -9,45 +9,46 @@ import { ProtoInfo } from 'src/app/ProtoInfo';
   styleUrls: ['./forms.component.css']
 })
 export class FormsComponent implements OnInit {
+  form = new FormGroup({
+    input: new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]+(.,)/)]),
+    selectCurrency: new FormControl('USD'),
+    output: new FormControl(''),
+  });
+
+
   [x: string]: any;
-
-
-  post: ProtoInfo;
-  input1: number;
-  value2: number;
-  corporationObj = 'USD';
+  post: ProtoInfo;;
   rateName: string;
 
   rates = new Map([
     ['USD', '145'],
     ['EUR', '292'],
     ['RUB', '298'],
-    ['CNY', '250'], //китайский юань
-    ['GBP', '143'], //фунт сткрлингов
-    ['CAD', '124']  //канадский доллар
+    ['CNY', '250'], 
+    ['GBP', '143'], 
+    ['CAD', '124']  
   ]);
 
-public getSelectedRate(){
-  return this.corporationObj;
-}
+ 
   constructor(private servService: ServService) { }
   ngOnInit(): void {
   }
 
-  Convert(valueFrom: string, str: string) {
- 
-    this.servService.getData(str).subscribe((res: ProtoInfo) => {
+  Convert() { 
+
+    this.servService.getData(this.form.controls.selectCurrency.value).subscribe((res: ProtoInfo) => {
+      this.form.controls.input.disable();
+      this.form.controls.output.disable();
+
       this.post = res;
       console.log(this.post);
-      this.rateName = this.post.Cur_Name;
+      this.rateName = this.post.Cur_Name +' в Бел рубли';
+      console.log(parseInt(this.form.controls.input.value) * this.post.Cur_OfficialRate / this.post.Cur_Scale);
+      this.form.controls.input.enable();
+      this.form.controls.output.enable();
+      this.form.controls.output.patchValue((parseInt(this.form.controls.input.value) * this.post.Cur_OfficialRate / this.post.Cur_Scale)+' BYN' );
+
     });
-    setTimeout(() => {
-      console.log(this.post.Cur_OfficialRate/this.post.Cur_Scale);
-      console.log(this.post.Date);
-      console.log(valueFrom);
-      console.log(parseInt(valueFrom) * this.post.Cur_OfficialRate/this.post.Cur_Scale);
-      this.value2 = (parseInt(valueFrom) * this.post.Cur_OfficialRate/this.post.Cur_Scale);
-    }, 1000);
 
   }
 
