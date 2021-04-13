@@ -1,9 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ServService } from 'src/serv.service';
 import { ProtoInfo } from 'src/app/ProtoInfo';
-import { Observable } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import { DecimalPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-forms',
@@ -37,6 +35,7 @@ public getSelectedRate(){
   }
 
   Convert(valueFrom: string, str: string) {
+ 
     this.servService.getData(str).subscribe((res: ProtoInfo) => {
       this.post = res;
       console.log(this.post);

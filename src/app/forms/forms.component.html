@@ -1,7 +1,7 @@
 <div class="container">
     <h3>Convert currency</h3>
-    <form (submit)="Convert(inputFrom.value, inputTo.name)">
-        <input #inputFrom>
+    <form (submit)="Convert(inputFrom.value, inputTo.name)" >
+        <input #inputFrom matInput type="number" pattern="[/^[0-9]+(,.)/]*">
     </form>
     <select [(ngModel)]="corporationObj" [value]="(corporationObj? corporationObj : 'USD')">
     <option *ngFor="let recipient of rates | keyvalue" value="{{recipient.key}}"> {{recipient.key}}</option>
