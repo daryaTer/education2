@@ -24,17 +24,17 @@ export class FormsComponent implements OnInit {
     ['USD', '145'],
     ['EUR', '292'],
     ['RUB', '298'],
-    ['CNY', '250'], 
-    ['GBP', '143'], 
-    ['CAD', '124']  
+    ['CNY', '250'],
+    ['GBP', '143'],
+    ['CAD', '124']
   ]);
 
- 
+
   constructor(private servService: ServService) { }
   ngOnInit(): void {
   }
 
-  Convert() { 
+  Convert() {
 
     this.servService.getData(this.form.controls.selectCurrency.value).subscribe((res: ProtoInfo) => {
       this.form.controls.input.disable();
@@ -42,11 +42,11 @@ export class FormsComponent implements OnInit {
 
       this.post = res;
       console.log(this.post);
-      this.rateName = this.post.Cur_Name +' в Бел рубли';
+      this.rateName = this.post.Cur_Name + ' в Бел рубли';
       console.log(parseInt(this.form.controls.input.value) * this.post.Cur_OfficialRate / this.post.Cur_Scale);
       this.form.controls.input.enable();
       this.form.controls.output.enable();
-      this.form.controls.output.patchValue((parseInt(this.form.controls.input.value) * this.post.Cur_OfficialRate / this.post.Cur_Scale)+' BYN' );
+      this.form.controls.output.patchValue((parseInt(this.form.controls.input.value) * this.post.Cur_OfficialRate / this.post.Cur_Scale) + ' BYN');
 
     });
 
