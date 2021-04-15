@@ -1,41 +1,39 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { RouterModule, Routes } from '@angular/router';
-import { FormsComponent } from 'src/app/forms/forms.component'
-import { DateComponent } from 'src/app/date/date.component';
-import { TestFormComponent } from 'src/app/test-form/test-form.component';
-import { AppComponent } from './app.component';
+// import { FormsComponent } from './forms/forms.component'
+// import { DateComponent } from './date/date.component';
+// import { TestFormComponent } from './test-form/test-form.component';
+// import { AppComponent } from './app.component';
+
+// const appRoutes: Routes = [
+//     {
+//         path: 'converter1',
+//         component: TestFormComponent
+//     },
+
+//     {
+//         path: 'converter2',
+//         component: FormsComponent
+//     },
+
+//     {
+//         path: 'chart',
+//         component: DateComponent
+//     },
+//     { path: '', redirectTo: 'converter1', pathMatch: 'full' }
+// ];
 
 const appRoutes: Routes = [
-    {
-        path: '',
-        component: TestFormComponent
-    },
-
-    {
-        path: 'converter2',
-        component: FormsComponent
-    },
-
-    {
-        path: 'chart',
-        component: DateComponent
-    }
-];
-
+    { path: 'dinconverter', loadChildren: () => import('./test-form/test-form-routing.module').then(m => m.TestFormComponentRoutingModule) },
+    { path: 'clickconverter', loadChildren: () => import('./forms/forms-routing.module').then(m => m.FormsRoutingModule) },
+    { path: 'chart', loadChildren: () => import('./date/date-routing.module').then(m => m.DateRoutingModule) },
+    { path: '', redirectTo: 'dinconverter', pathMatch: 'full' }
+]
 @NgModule({
-    declarations: [
-    ],
     imports: [
-        CommonModule,
         RouterModule.forRoot(appRoutes)
     ],
-    bootstrap: [
-        AppComponent,
-        FormsComponent,
-        DateComponent,
-        TestFormComponent],
+
     exports: [
         RouterModule
     ]
