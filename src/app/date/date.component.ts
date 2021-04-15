@@ -82,7 +82,6 @@ export class DateComponent implements OnInit {
   }
 
 
-
   callChart() {
     this.chart = new Chart({
       chart: {
