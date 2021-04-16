@@ -2,7 +2,7 @@
 
     <input type="date" [(ngModel)]="value1" id="start-date">
     <input type="date" [(ngModel)]="value2" id="end-date">
-    Rate: 
+    Rate:
     <select [(ngModel)]="selectedRate" [value]="(selectedRate? selectedRate : 'usd')">
         <option *ngFor="let rate of rates | keyvalue" value="{{rate.key}}"> {{rate.key}}</option>
     </select>
@@ -10,4 +10,9 @@
 
 
 </div>
-<div [chart]="chart"></div>
+<div id="preloader" *ngIf="loader">
+    <div id="loader">
+    </div>
+</div>
+
+<div [chart]="chart" *ngIf="!loader"></div>

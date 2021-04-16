@@ -8,7 +8,7 @@ import { FormsComponent } from '../forms/forms.component';
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
-  styleUrls: ['./date.component.css']
+  styleUrls: ['./date.component.scss']
 })
 export class DateComponent implements OnInit {
 
@@ -20,6 +20,8 @@ export class DateComponent implements OnInit {
     this.dateClick(145);
   }
 
+  loaderValue:number;
+  loader:boolean;
   value1: any;
   value2: any;
   post: ProtoInfo;
@@ -41,6 +43,8 @@ export class DateComponent implements OnInit {
   dateClick(rateCode = this.rates.get(this.selectedRate)) { //////////// по умолчанию выводит курс доллара за посл 90 дней
     this.currenceArray = ([]);
     this.dateArray = ([]);
+    this.loaderValue=0;
+    this.loader=true;
 
     ////////// если начало и конец периода не выбраны, то выводится инфа за последние 90 дней
 
@@ -73,9 +77,13 @@ export class DateComponent implements OnInit {
   getDataWithDate(date, rateCode, daysCount) {
     this.servService.getDataWithDate(date, rateCode).subscribe((res: ProtoInfo) => {
       this.post = res;
+      this.loaderValue= this.loaderValue+ 100/daysCount;
+      console.log(this.loaderValue + ' this.loaderValue');
+
       let rate = this.post.Cur_OfficialRate / this.post.Cur_Scale;
       this.currenceArray.push(rate);
       if (this.currenceArray.length == daysCount) {
+        this.loader=!this.loader;
         this.callChart();
       }
     });
