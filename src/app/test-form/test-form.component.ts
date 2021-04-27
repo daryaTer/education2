@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ServService } from 'src/serv.service';
 import { ProtoInfo } from '../ProtoInfo';
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { SharedService } from "../shared/shared.service";
 
 
 @Component({
@@ -29,7 +30,11 @@ export class TestFormComponent implements OnInit {
     ['CAD', '124']  //канадский доллар
   ]);
 
-  constructor(private servService: ServService) {
+  public CurrenceRate;
+
+  constructor(
+    private servService: ServService,
+    private sharedServ: SharedService) {
   }
 
 
@@ -37,13 +42,19 @@ export class TestFormComponent implements OnInit {
   ngOnInit(): void {
     this.myForm.controls.selectCurrency.valueChanges.subscribe(value => {
       this.myForm.controls.input1.disable();
+
+
+
       this.servService.getData(value).subscribe((res: ProtoInfo) => {
         this.post = res;
         this.koef = this.post.Cur_OfficialRate / this.post.Cur_Scale;
         this.myForm.controls.input1.enable();
         if (!!this.myForm.controls.input1.value) {
           this.myForm.controls.input2.setValue(this.myForm.controls.input1.value * this.koef);
+          this.sharedServ.setMessage(value);
+          console.log(value+'          WERYTFGVJHB')
         }
+        this.sharedServ.setMessage(value);
       });
     });
 

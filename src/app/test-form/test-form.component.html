@@ -4,7 +4,7 @@
         <input formControlName="input1" matInput type="number" pattern="[/^[0-9]+(,.)/]*">
 
         <select formControlName="selectCurrency">
-            <option *ngFor="let recipient of rates | keyvalue" value="{{recipient.key}}"> {{recipient.key}}</option>
+            <option *ngFor="let rate of rates | keyvalue" value="{{rate.key}}"> {{rate.key}}</option>
         </select>
         <input formControlName='input2' readonly>
         <div *ngIf="_input1.invalid && !_input1.errors?.pattern">enter numbers</div>

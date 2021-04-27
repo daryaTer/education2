@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServService } from 'src/serv.service';
 import { ProtoInfo } from '../ProtoInfo';
 import { Chart } from 'angular-highcharts';
-import { FormsComponent } from '../forms/forms.component';
-
+import { SharedService } from "../shared/shared.service";
 
 @Component({
   selector: 'app-date',
@@ -12,15 +11,23 @@ import { FormsComponent } from '../forms/forms.component';
 })
 export class DateComponent implements OnInit {
 
-  constructor(private servService: ServService) { }
+  constructor(
+    private servService: ServService,
+    private sharedServ: SharedService
+  ) { }
 
 
   ngOnInit(): void {
 
-    this.dateClick(145);
+    this.selectedRate = this.sharedServ.getMessage();
+    if (this.selectedRate == undefined) {
+      this.selectedRate = 'USD';
+    } 
+    this.dateClick(this.rates.get(this.selectedRate));
+
   }
 
-  loader:boolean;
+  loader: boolean;
   value1: any;
   value2: any;
   post: ProtoInfo;
@@ -28,7 +35,7 @@ export class DateComponent implements OnInit {
   currenceArray = [];
   dateArray = [];
   chart = new Chart();
-  selectedRate = 'USD';
+  selectedRate;
   rates = new Map([
     ['USD', 145],
     ['EUR', 292],
@@ -39,10 +46,11 @@ export class DateComponent implements OnInit {
   ]);
 
 
+
   dateClick(rateCode = this.rates.get(this.selectedRate)) { //////////// по умолчанию выводит курс доллара за посл 90 дней
     this.currenceArray = ([]);
     this.dateArray = ([]);
-    this.loader=true;
+    this.loader = true;
 
     ////////// если начало и конец периода не выбраны, то выводится инфа за последние 90 дней
 
@@ -75,10 +83,10 @@ export class DateComponent implements OnInit {
   getDataWithDate(date, rateCode, daysCount) {
     this.servService.getDataWithDate(date, rateCode).subscribe((res: ProtoInfo) => {
       this.post = res;
-       let rate = this.post.Cur_OfficialRate / this.post.Cur_Scale;
+      let rate = this.post.Cur_OfficialRate / this.post.Cur_Scale;
       this.currenceArray.push(rate);
       if (this.currenceArray.length == daysCount) {
-        this.loader=!this.loader;
+        this.loader = !this.loader;
         this.callChart();
       }
     });
