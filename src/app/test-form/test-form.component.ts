@@ -52,7 +52,6 @@ export class TestFormComponent implements OnInit {
         if (!!this.myForm.controls.input1.value) {
           this.myForm.controls.input2.setValue(this.myForm.controls.input1.value * this.koef);
           this.sharedServ.setMessage(value);
-          console.log(value+'          WERYTFGVJHB')
         }
         this.sharedServ.setMessage(value);
       });
