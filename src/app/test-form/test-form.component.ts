@@ -61,7 +61,11 @@ export class TestFormComponent implements OnInit {
     this.myForm.controls.input1.valueChanges.subscribe(value => {
       this.myForm.controls.input2.setValue(value * this.koef);
     });
-    this.myForm.controls.selectCurrency.setValue('USD');
+    if(this.sharedServ.getMessage()==undefined)
+    {
+      this.sharedServ.setMessage('USD');
+    }
+    this.myForm.controls.selectCurrency.setValue(this.sharedServ.getMessage());
     this.myForm.controls.input1.setValue('1');
   }
 
