@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServService } from 'src/serv.service';
 import { ProtoInfo } from 'src/app/ProtoInfo';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SharedService } from '../shared/shared.service';
 
 @Component({
   selector: 'app-forms',
@@ -14,6 +15,8 @@ export class FormsComponent implements OnInit {
     selectCurrency: new FormControl('USD'),
     output: new FormControl(''),
   });
+
+
 
 
   [x: string]: any;
@@ -30,8 +33,23 @@ export class FormsComponent implements OnInit {
   ]);
 
 
-  constructor(private servService: ServService) { }
+  constructor(
+    private servService: ServService,
+    private sharedServ: SharedService) { }
+
   ngOnInit(): void {
+    this.sharedServ.currency$.subscribe(value => {
+      this.form.controls.selectCurrency.setValue(value);
+    })
+
+    
+
+    this.form.controls.selectCurrency.valueChanges.subscribe(value => {
+      if(value !=this.sharedServ.currency$.value){
+        this.sharedServ.currency$.next(value);
+      }
+    })
+
   }
 
   Convert() {

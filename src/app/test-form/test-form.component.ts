@@ -40,32 +40,34 @@ export class TestFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.myForm.controls.selectCurrency.valueChanges.subscribe(value => {
+
+    this.myForm.controls.selectCurrency.valueChanges.subscribe(value => {     
       this.myForm.controls.input1.disable();
-
-
-
+      if(value !=this.sharedServ.currency$.value){
+        this.sharedServ.currency$.next(value);
+      }
+      
+   
       this.servService.getData(value).subscribe((res: ProtoInfo) => {
         this.post = res;
         this.koef = this.post.Cur_OfficialRate / this.post.Cur_Scale;
         this.myForm.controls.input1.enable();
+        
         if (!!this.myForm.controls.input1.value) {
           this.myForm.controls.input2.setValue(this.myForm.controls.input1.value * this.koef);
-          this.sharedServ.setMessage(value);
         }
-        this.sharedServ.setMessage(value);
       });
     });
 
     this.myForm.controls.input1.valueChanges.subscribe(value => {
       this.myForm.controls.input2.setValue(value * this.koef);
     });
-    if(this.sharedServ.getMessage()==undefined)
-    {
-      this.sharedServ.setMessage('USD');
-    }
-    this.myForm.controls.selectCurrency.setValue(this.sharedServ.getMessage());
+
+    this.sharedServ.currency$.subscribe(value => {
+      this.myForm.controls.selectCurrency.setValue(value);
+    });
     this.myForm.controls.input1.setValue('1');
+ 
   }
 
   get _input1() {

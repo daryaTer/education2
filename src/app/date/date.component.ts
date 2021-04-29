@@ -18,11 +18,11 @@ export class DateComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-    this.selectedRate = this.sharedServ.getMessage();
-    if (this.selectedRate == undefined) {
-      this.selectedRate = 'USD';
-    } 
+ 
+    
+    this.sharedServ.currency$.subscribe( value => {
+      this.selectedRate=value;
+  }) 
     this.dateClick(this.rates.get(this.selectedRate));
 
   }

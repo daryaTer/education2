@@ -6,16 +6,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedService {
 
-trackedCurrency; 
+ 
+
+public currency$ = new BehaviorSubject('USD');
+    
 
   constructor() { }
 
-  setMessage(data){
-    this.trackedCurrency=data;
-  }
-
-  getMessage(){
-    return this.trackedCurrency;
-  }
 
 }
