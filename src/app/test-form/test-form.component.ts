@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ServService } from 'src/serv.service';
 import { ProtoInfo } from '../ProtoInfo';
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { SharedService } from "../shared/shared.service";
+import { of, from, fromEvent, interval, Observable } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+
 
 
 @Component({
@@ -39,25 +41,46 @@ export class TestFormComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
+  ngOnInit() {
 
-    this.myForm.controls.selectCurrency.valueChanges.subscribe(value => {     
-      this.myForm.controls.input1.disable();
-      if(value !=this.sharedServ.currency$.value){
-        this.sharedServ.currency$.next(value);
-      }
-      
-   
-      this.servService.getData(value).subscribe((res: ProtoInfo) => {
+    this.myForm.controls.selectCurrency.valueChanges.pipe(
+      switchMap(
+        value => {
+          this.myForm.controls.input1.disable();
+          if (value != this.sharedServ.currency$.value) {
+            this.sharedServ.currency$.next(value);
+
+          }
+          return this.servService.getData(value)
+        }
+      ))
+      .subscribe((res: ProtoInfo) => {
         this.post = res;
         this.koef = this.post.Cur_OfficialRate / this.post.Cur_Scale;
         this.myForm.controls.input1.enable();
-        
+
         if (!!this.myForm.controls.input1.value) {
           this.myForm.controls.input2.setValue(this.myForm.controls.input1.value * this.koef);
         }
       });
-    });
+
+    // this.myForm.controls.selectCurrency.valueChanges.subscribe(value => {     
+    //   this.myForm.controls.input1.disable();
+    //   if(value !=this.sharedServ.currency$.value){
+    //     this.sharedServ.currency$.next(value);
+    //   }
+
+
+    //   this.servService.getData(value).subscribe((res: ProtoInfo) => {
+    //     this.post = res;
+    //     this.koef = this.post.Cur_OfficialRate / this.post.Cur_Scale;
+    //     this.myForm.controls.input1.enable();
+
+    //     if (!!this.myForm.controls.input1.value) {
+    //       this.myForm.controls.input2.setValue(this.myForm.controls.input1.value * this.koef);
+    //     }
+    //   });
+    // });
 
     this.myForm.controls.input1.valueChanges.subscribe(value => {
       this.myForm.controls.input2.setValue(value * this.koef);
@@ -67,7 +90,7 @@ export class TestFormComponent implements OnInit {
       this.myForm.controls.selectCurrency.setValue(value);
     });
     this.myForm.controls.input1.setValue('1');
- 
+
   }
 
   get _input1() {
