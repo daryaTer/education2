@@ -18,12 +18,20 @@ export class DateComponent implements OnInit {
 
 
   ngOnInit(): void {
- 
-    
-    this.sharedServ.currency$.subscribe( value => {
-      this.selectedRate=value;
-  }) 
+    if (!localStorage.getItem('currency')) {
+      localStorage.setItem('currency', 'USD');
+      this.sharedServ.currency$.next(localStorage.getItem('currency'))
+    }
+
+
+    this.sharedServ.currency$.subscribe(value => {
+      this.selectedRate = value;
+    })
     this.dateClick(this.rates.get(this.selectedRate));
+
+
+
+
 
   }
 

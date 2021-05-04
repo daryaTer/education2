@@ -42,13 +42,18 @@ export class TestFormComponent implements OnInit {
 
 
   ngOnInit() {
+    if (!localStorage.getItem('currency')) {
+      localStorage.setItem('currency', 'USD');
+      this.sharedServ.currency$.next(localStorage.getItem('currency'))
+    }
 
     this.myForm.controls.selectCurrency.valueChanges.pipe(
       switchMap(
         value => {
           this.myForm.controls.input1.disable();
           if (value != this.sharedServ.currency$.value) {
-            this.sharedServ.currency$.next(value);
+            localStorage.setItem('currency', value);
+            this.sharedServ.currency$.next(localStorage.getItem('currency'));
 
           }
           return this.servService.getData(value)

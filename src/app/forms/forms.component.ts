@@ -38,15 +38,25 @@ export class FormsComponent implements OnInit {
     private sharedServ: SharedService) { }
 
   ngOnInit(): void {
+    if (!localStorage.getItem('currency')) {
+      localStorage.setItem('currency', 'USD');
+      this.sharedServ.currency$.next(localStorage.getItem('currency'))
+    }
+
+
     this.sharedServ.currency$.subscribe(value => {
       this.form.controls.selectCurrency.setValue(value);
     })
 
-    
+
 
     this.form.controls.selectCurrency.valueChanges.subscribe(value => {
-      if(value !=this.sharedServ.currency$.value){
-        this.sharedServ.currency$.next(value);
+      if (value != this.sharedServ.currency$.value) {
+
+        localStorage.setItem('currency', value);
+        this.sharedServ.currency$.next(localStorage.getItem('currency'));
+
+
       }
     })
 

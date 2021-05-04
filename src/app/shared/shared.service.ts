@@ -8,7 +8,8 @@ export class SharedService {
 
  
 
-public currency$ = new BehaviorSubject('USD');
+
+public currency$ = new BehaviorSubject(localStorage.getItem('currency'));
     
 
   constructor() { }
